@@ -28,3 +28,5 @@
 * поиск элементов на странице - contentService.js
 * преобразование label в нужный вид - labelService.js
 * валидации полей - valueService.js, validInput.js
+
+[пример приложения](https://serhiishemehon.github.io/weblink-test/dist/)
