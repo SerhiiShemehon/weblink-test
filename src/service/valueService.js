@@ -1,0 +1,29 @@
+import {
+    formatDate,
+    isNumber,
+    isEmail
+} from './validInput'
+
+// data validation
+const valueService = (key, object) => {
+    if (object[key] === undefined && !object[key]) {
+        return false;
+    }
+
+    switch (key) {
+        case "dob":
+            return formatDate(object[key]);
+        case 'firstPhone':
+        case 'secondaryPhone':
+        case 'experience':
+            return isNumber(object[key]);
+        case 'email':
+            return isEmail(object[key]);
+        default:
+            return object[key];
+    }
+}
+
+export {
+    valueService
+};
