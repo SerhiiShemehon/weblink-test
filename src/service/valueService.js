@@ -1,11 +1,12 @@
 import {
     formatDate,
     isNumber,
-    isEmail
+    isEmail,
+    sliceValue
 } from './validInput'
 
 // data validation
-const valueService = (key, object) => {
+const valueService = (key, object, max) => {
     if (object[key] === undefined && !object[key]) {
         return false;
     }
@@ -13,6 +14,8 @@ const valueService = (key, object) => {
     switch (key) {
         case "dob":
             return formatDate(object[key]);
+        case "desc":
+            return sliceValue(object[key], max);
         case 'firstPhone':
         case 'secondaryPhone':
         case 'experience':

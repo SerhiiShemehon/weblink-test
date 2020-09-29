@@ -3,8 +3,7 @@ import {
     getContainers,
     getBtnAdd,
     getBtnCancel,
-    containerModal,
-    getWorkField
+    containerModal
 } from '../service/contentService';
 
 const isWorkers = data.workers !== undefined || !!data.workers.length;
@@ -12,7 +11,7 @@ const numberWorkers = isWorkers ? data.workers.length : 0;
 let btnOpenModal = null;
 let btnAddWorker = null;
 let btnCancelWorker = null;
-let currantContainerModal = null;
+let currentContainerModal = null;
 let isOpenModal = false;
 let currentStep = 0;
 
@@ -24,9 +23,9 @@ const addWorker = () => {
     btnOpenModal.click();
     isOpenModal = true;
 
-    currantContainerModal = containerModal();
+    currentContainerModal = containerModal();
     let checkOpenModalTimer = setInterval(() => {
-        let modalContent = currantContainerModal.querySelector('.MuiDialogContent-root');
+        let modalContent = currentContainerModal.querySelector('.MuiDialogContent-root');
         if (!!modalContent){
             clearInterval(checkOpenModalTimer);
             addField(modalContent, data.workers[currentStep - 1]);
@@ -40,19 +39,12 @@ const addField = (selector, data) => {
     const containers = getContainers(selector);
 
     containers.forEach((container) => {
-        dataInput(container, data);
+        dataInput(container, data, selector);
     });
 
-    setTimeout(()=>{
-        const currentContainer = getWorkField(selector);
-        if (currentContainer){
-            dataInput(currentContainer, data);
-        }
-    },40);
-
     if (isOpenModal) {
-        btnAddWorker = getBtnAdd(currantContainerModal);
-        btnCancelWorker = getBtnCancel(currantContainerModal);
+        btnAddWorker = getBtnAdd(currentContainerModal);
+        btnCancelWorker = getBtnCancel(currentContainerModal);
         btnAddWorker.addEventListener('click', checkAddModal, false);
         btnCancelWorker.addEventListener('click', checkCancelModal, false);
         btnAddWorker.click();
@@ -64,11 +56,11 @@ const addField = (selector, data) => {
 const checkAddModal = () => {
     setTimeout(()=>{
         isOpenModal = false;
-        let isEmptyInput = currantContainerModal.querySelectorAll('.Mui-error');
+        let isEmptyInput = currentContainerModal.querySelectorAll('.Mui-error');
         if(!isEmptyInput.length){
             let checkClosedModalTimer = setInterval(() => {
-                let currantContainerModal = containerModal();
-                if (!currantContainerModal){
+                let currentContainerModal = containerModal();
+                if (!currentContainerModal){
                     btnAddWorker.removeEventListener('click', checkAddModal);
                     clearInterval(checkClosedModalTimer);
                     app();

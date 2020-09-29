@@ -4,17 +4,31 @@ import {setSelectInput} from './setSelectInput';
 import {
     getCurrentInput,
     getCurrentLabel,
-    getCurrentSelect
+    getCurrentSelect,
+    getWorkField
 } from '../service/contentService';
 
 
-const dataInput = (container, data) => {
+const dataInput = (container, data, selector) => {
     const inputs = getCurrentInput(container);
     const label = getCurrentLabel(container);
     const select = getCurrentSelect(container);
 
     if (!inputs || !label) {
         return false;
+    }
+
+    const checkWorkField = () => {
+        setTimeout(()=>{
+            const currentContainer = getWorkField(selector);
+            if (currentContainer){
+                dataInput(currentContainer, data);
+            }
+        },40);
+    }
+
+    if (label === 'dob') {
+        inputs[0].addEventListener('blur', checkWorkField);
     }
 
     if (inputs.length > 1) {

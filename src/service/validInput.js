@@ -22,6 +22,14 @@ const formatDate = (value) => {
     return `${month}/${day}/${1900 + birthday.getYear()}`;
 }
 
+// slice value
+const sliceValue = (value, max) => {
+    if (!value) {
+        return null;
+    }
+    return value.slice(0, max);
+}
+
 // data validation number
 const isNumber = (value) => {
     if (!value) {
@@ -55,5 +63,6 @@ export {
     checkEmptyInput,
     formatDate,
     isNumber,
-    isEmail
+    isEmail,
+    sliceValue
 };
